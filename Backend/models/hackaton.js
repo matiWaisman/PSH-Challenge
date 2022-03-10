@@ -1,18 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"),
+  Schema = mongoose.Schema;
+const DeveloperSchema = require("./developer");
 
 const HackatonSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "You must enter a name"],
-  },
   place: {
     type: String,
     required: [true, "You must enter a place"],
   },
-  date: {
-    type: Date,
+  year: {
+    type: Number,
     required: [true, "You must enter a date"],
   },
+  developer: { type: DeveloperSchema, red: "Developer" },
 });
 
 module.exports = mongoose.model("Hackaton", HackatonSchema);

@@ -27,6 +27,12 @@ const DeveloperSchema = new mongoose.Schema({
     type: Number,
     required: [true, "You must enter a score"],
   },
+  picture: {
+    large: {
+      type: String,
+      required: [true, "You must enter a pic"],
+    },
+  },
 });
 
 module.exports = mongoose.model("Developer", DeveloperSchema);

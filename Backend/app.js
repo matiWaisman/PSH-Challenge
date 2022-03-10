@@ -1,14 +1,5 @@
 const express = require("express");
 require("dotenv").config();
-const populateDb = require("./populateDb");
-
-/*var timerId = setInterval(function () {
-  const populateDb = require("./populateDb");
-}, 5000);*/
-
-setInterval(function () {
-  populateDb;
-}, 5000);
 
 const app = express();
 
