@@ -4,6 +4,7 @@ const HackatonSchema = require("./models/hackaton");
 const connect = require("./db/connect");
 
 const url = "https://randomuser.me/api";
+var amountOfDocuments = 100; // I had problems returning the count in the contAmountOfDocuments function, patching it adding a global variable
 
 const fetchApi = async (url) => {
   const response = await fetch(url);
@@ -81,7 +82,7 @@ const passHackatonJsonToObject = (data, developers) => {
 
 const createDevsObject = async () => {
   let devsArray = [];
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < 10; i++) {
     const devJson = await fetchApi(url);
     const devObject = passDevJsonToObject(devJson);
     devsArray.push(devObject);
@@ -112,12 +113,13 @@ const countAmountOfDocuments = () => {
     if (err) {
       return handleError(err);
     }
-    console.log(count);
+    amountOfDocuments = count;
   });
 };
 
 setInterval(function () {
-  if (countAmountOfDocuments < 11) {
+  countAmountOfDocuments();
+  if (amountOfDocuments < 10) {
     populateDb();
   }
 }, 60 * 5000);
