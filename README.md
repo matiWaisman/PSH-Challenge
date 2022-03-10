@@ -1,7 +1,7 @@
 # PSH-Challenge
 Starting plan:
 
-Making a populate database file that runs every five minutes that adds a event with a city and random year and foreach event adding ten random users with random scores.
+Making a populate database file that runs every five minutes that adds a event with a city and random year and foreach event adding ten random users with random scores. Done.
 
 Setting the routes and controllers for the Api.
 
