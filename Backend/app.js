@@ -1,12 +1,17 @@
 const express = require("express");
+const hackatonsRouter = require("./routes/hackatons");
 require("dotenv").config();
-const populate = require("./populateDb");
 
 const app = express();
 
 const connectDB = require("./db/connect");
+const populate = require("./populateDb");
+
+const notFound = require("./middleware/notFound");
 
 app.use(express.json());
+
+app.use("/api/v1/hackatons", hackatonsRouter);
 
 const PORT = process.env.PORT || 5000;
 
@@ -18,5 +23,7 @@ const start = async () => {
     console.log(error);
   }
 };
+
+app.use(notFound);
 
 start();
