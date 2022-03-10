@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const hackatonsRouter = require("./routes/hackatons");
 require("dotenv").config();
 
@@ -10,6 +11,7 @@ const populate = require("./populateDb");
 const notFound = require("./middleware/notFound");
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/v1/hackatons", hackatonsRouter);
 

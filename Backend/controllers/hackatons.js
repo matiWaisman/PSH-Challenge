@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Hackaton = require("../models/hackaton");
 
 const getHackatons = async (req, res) => {
