@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const populate = require("./populateDb");
 
 const app = express();
 

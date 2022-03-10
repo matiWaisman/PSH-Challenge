@@ -98,10 +98,8 @@ const createHackatonObject = async (developers) => {
 const populateDb = async () => {
   const developers = await createDevsObject();
   const hackatonObject = await createHackatonObject(developers);
-  console.log(hackatonObject);
   try {
     await connect(process.env.MONGO_URI);
-    await HackatonSchema.deleteMany();
     await HackatonSchema.create(hackatonObject);
     console.log("Hackaton added");
   } catch (err) {
@@ -109,4 +107,17 @@ const populateDb = async () => {
   }
 };
 
-populateDb();
+const countAmountOfDocuments = () => {
+  HackatonSchema.countDocuments({}, function (err, count) {
+    if (err) {
+      return handleError(err);
+    }
+    console.log(count);
+  });
+};
+
+setInterval(function () {
+  if (countAmountOfDocuments < 11) {
+    populateDb();
+  }
+}, 60 * 5000);
