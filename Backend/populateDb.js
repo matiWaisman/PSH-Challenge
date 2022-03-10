@@ -1,6 +1,6 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
-const HackatonModel = require("./models/developer");
+const HackatonSchema = require("./models/hackaton");
 const connect = require("./db/connect");
 
 const url = "https://randomuser.me/api";
@@ -74,7 +74,7 @@ const passHackatonJsonToObject = (data, developers) => {
   let hackaton = {
     place: city,
     year: generateRandomYear(2014, 2022),
-    developer: developers,
+    developers: developers,
   };
   return hackaton;
 };
@@ -95,21 +95,14 @@ const createHackatonObject = async (developers) => {
   return hackatonObject;
 };
 
-const createSingleDev = async () => {
-  const devJson = await fetchApi(url);
-  const devObject = passDevJsonToObject(devJson);
-  return devObject;
-};
-
 const populateDb = async () => {
   const developers = await createDevsObject();
-  const dev = await createSingleDev();
-  const hackatonObject = await createHackatonObject(dev);
+  const hackatonObject = await createHackatonObject(developers);
   console.log(hackatonObject);
   try {
     await connect(process.env.MONGO_URI);
-    await HackatonModel.deleteMany();
-    await HackatonModel.create(hackatonObject);
+    await HackatonSchema.deleteMany();
+    await HackatonSchema.create(hackatonObject);
     console.log("Hackaton added");
   } catch (err) {
     console.log(err);
