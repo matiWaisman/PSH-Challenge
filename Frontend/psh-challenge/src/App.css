@@ -17,3 +17,7 @@ button {
 img+h1 {
   margin-left: 10px;
 }
+
+.golden {
+  background-color: #FFD700 !important;
+}

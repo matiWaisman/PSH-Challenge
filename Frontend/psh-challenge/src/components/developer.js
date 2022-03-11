@@ -2,9 +2,9 @@ import React from "react";
 import "../developer.css";
 
 const Developer = (props) => {
-  const { developer, i, sortScores } = props;
+  const { developer, i, sortScores, isHallOfFame } = props;
   var borderColorClass = "";
-  if (sortScores) {
+  if (sortScores || isHallOfFame) {
     if (i === 0) {
       borderColorClass = "first";
     }
@@ -32,6 +32,7 @@ const Developer = (props) => {
             <p>
               Score: <span className="score">{developer.score.toFixed(2)}</span>
             </p>
+            <p>{isHallOfFame ? `Hackaton: ${developer.hackaton}` : ""}</p>
           </div>
         </div>
       </div>

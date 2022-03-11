@@ -4,12 +4,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const Home = (props) => {
-  const { eventsArray, setShowHome, setCurrentHackaton } = props;
+  const {
+    hackatonsArray,
+    setShowHome,
+    setCurrentHackaton,
+    hallOfFamePosition,
+  } = props;
   const handleClick = (e) => {
     setCurrentHackaton(e);
   };
 
-  if (eventsArray.length === 0) {
+  if (hackatonsArray.length === 0) {
     return (
       <>
         <div className="my-5 d-flex justify-content-center">
@@ -35,18 +40,18 @@ const Home = (props) => {
             <h1>Hackatons</h1>
           </div>
           <ListGroup>
-            {eventsArray.map((event, i) => (
+            {hackatonsArray.map((hackaton, i) => (
               <button
-                key={event.place}
-                value={event}
-                name="event"
+                key={hackaton.place}
                 onClick={() => {
                   handleClick(i);
                   setShowHome(false);
                 }}
               >
-                <ListGroup.Item className="my-1">
-                  {event.place} {event.date}
+                <ListGroup.Item
+                  className={hallOfFamePosition === i ? "my-1 golden" : "my-1"}
+                >
+                  {hackaton.place} {hackaton.date}
                 </ListGroup.Item>
               </button>
             ))}

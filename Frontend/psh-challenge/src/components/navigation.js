@@ -5,7 +5,12 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Navigation = (props) => {
-  const { eventsArray, setShowHome, setCurrentHackaton } = props;
+  const {
+    hackatonsArray,
+    setShowHome,
+    setCurrentHackaton,
+    hallOfFamePosition,
+  } = props;
   const handleClick = (e) => {
     setCurrentHackaton(e);
     setShowHome(false);
@@ -32,17 +37,17 @@ const Navigation = (props) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
-                {eventsArray.map((event, i) => (
+                {hackatonsArray.map((hackaton, i) => (
                   <button
-                    key={event.id}
-                    value={event}
-                    name="event"
+                    key={hackaton.id}
                     onClick={() => {
                       handleClick(i);
                     }}
                   >
-                    <NavDropdown.Item>
-                      {event.place} {event.date}
+                    <NavDropdown.Item
+                      className={hallOfFamePosition === i ? "golden" : ""}
+                    >
+                      {hackaton.place} {hackaton.date}
                     </NavDropdown.Item>
                   </button>
                 ))}
