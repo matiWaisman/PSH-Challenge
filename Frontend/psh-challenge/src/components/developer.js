@@ -2,16 +2,18 @@ import React from "react";
 import "../developer.css";
 
 const Developer = (props) => {
-  const { developer, i } = props;
+  const { developer, i, sortScores } = props;
   var borderColorClass = "";
-  if (i === 0) {
-    borderColorClass = "first";
-  }
-  if (i === 1) {
-    borderColorClass = "second";
-  }
-  if (i === 2) {
-    borderColorClass = "third";
+  if (sortScores) {
+    if (i === 0) {
+      borderColorClass = "first";
+    }
+    if (i === 1) {
+      borderColorClass = "second";
+    }
+    if (i === 2) {
+      borderColorClass = "third";
+    }
   }
   return (
     <>

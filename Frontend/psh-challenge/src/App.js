@@ -5,14 +5,11 @@ import Home from "./components/home";
 import Hackaton from "./components/hackaton";
 
 function App() {
-  const url = "http://localhost:5000/api/v1/hackatons";
+  var url = "http://localhost:5000/api/v1/hackatons";
   const [eventsArray, setEventsArray] = useState([]);
   const [showHome, setShowHome] = useState(true);
-  const [currentEvent, setCurrentEvent] = useState();
-
-  useEffect(() => {
-    getEvents(url);
-  }, []);
+  const [currentHackaton, setCurrentHackaton] = useState();
+  const [sortScores, setSortScores] = useState(false);
 
   const getEvents = async (url) => {
     const response = await fetch(url);
@@ -22,20 +19,38 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    getEvents(url);
+  }, []);
+
+  useEffect(() => {
+    if (sortScores) {
+      url = "http://localhost:5000/api/v1/hackatons?sort=true";
+    } else {
+      url = "http://localhost:5000/api/v1/hackatons";
+    }
+    getEvents(url);
+  }, [sortScores]);
+
   return (
     <div className="App">
       <Navigation
         eventsArray={eventsArray}
-        setCurrentEvent={setCurrentEvent}
         setShowHome={setShowHome}
+        setCurrentHackaton={setCurrentHackaton}
       />
       {!showHome ? (
-        <Hackaton currentEvent={currentEvent} />
+        <Hackaton
+          sortScores={sortScores}
+          setSortScores={setSortScores}
+          eventsArray={eventsArray}
+          currentHackaton={currentHackaton}
+        />
       ) : (
         <Home
           eventsArray={eventsArray}
-          setCurrentEvent={setCurrentEvent}
           setShowHome={setShowHome}
+          setCurrentHackaton={setCurrentHackaton}
         />
       )}
     </div>

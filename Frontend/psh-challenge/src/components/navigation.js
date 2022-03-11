@@ -5,10 +5,9 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Navigation = (props) => {
-  const { eventsArray, setCurrentEvent, setShowHome } = props;
+  const { eventsArray, setShowHome, setCurrentHackaton } = props;
   const handleClick = (e) => {
-    console.log(e);
-    setCurrentEvent(e);
+    setCurrentHackaton(e);
     setShowHome(false);
   };
 
@@ -18,25 +17,32 @@ const Navigation = (props) => {
   return (
     <>
       <Navbar bg="danger" expand="lg">
-        <Container className="text-light">
+        <Container className="navbar-text">
           <button onClick={handleBrand}>
-            <Navbar.Brand>Psh Hackatons</Navbar.Brand>
+            <Navbar.Brand>
+              <img
+                src="https://wearepsh.com/static/images/logo_red_psh.svg"
+                alt="Psh Logo"
+                className="img-logo"
+              ></img>{" "}
+              Hackatons
+            </Navbar.Brand>
           </button>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown title="Hackatons" id="basic-nav-dropdown">
+              <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
                 {eventsArray.map((event, i) => (
                   <button
                     key={event.id}
                     value={event}
                     name="event"
                     onClick={() => {
-                      handleClick(event);
+                      handleClick(i);
                     }}
                   >
                     <NavDropdown.Item>
-                      {event.place} {event.year}
+                      {event.place} {event.date}
                     </NavDropdown.Item>
                   </button>
                 ))}
