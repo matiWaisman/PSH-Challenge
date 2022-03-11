@@ -40,8 +40,8 @@ const HackatonSchema = new mongoose.Schema({
     type: String,
     required: [true, "You must enter a place"],
   },
-  year: {
-    type: Number,
+  date: {
+    type: String,
     required: [true, "You must enter a date"],
   },
   developers: [DeveloperSchema],

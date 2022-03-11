@@ -2,6 +2,7 @@ require("dotenv").config();
 const fetch = require("node-fetch");
 const HackatonSchema = require("./models/hackaton");
 const connect = require("./db/connect");
+const moment = require("moment");
 
 const url = "https://randomuser.me/api";
 var amountOfDocuments = 100; // I had problems returning the count in the contAmountOfDocuments function, patching it adding a global variable
@@ -18,11 +19,20 @@ const generateRandomScore = (min, max) => {
   return Math.random() * (max - min) + min;
 };
 
-const generateRandomYear = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+function generateRandomDate(date1, date2) {
+  function randomValueBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  var date1 = date1 || "01-01-1970";
+  var date2 = date2 || new Date().toLocaleDateString();
+  date1 = new Date(date1).getTime();
+  date2 = new Date(date2).getTime();
+  if (date1 > date2) {
+    return new Date(randomValueBetween(date2, date1)).toLocaleDateString();
+  } else {
+    return new Date(randomValueBetween(date1, date2)).toLocaleDateString();
+  }
+}
 
 //I had problems adding the result into the json object, so then i'm creating a new object deestructuring the properties and then creating a new one
 const passDevJsonToObject = (data) => {
@@ -74,7 +84,7 @@ const passHackatonJsonToObject = (data, developers) => {
   } = data;
   let hackaton = {
     place: city,
-    year: generateRandomYear(2014, 2022),
+    date: moment().format(generateRandomDate("02/13/2013", "01/03/2022")),
     developers: developers,
   };
   return hackaton;
