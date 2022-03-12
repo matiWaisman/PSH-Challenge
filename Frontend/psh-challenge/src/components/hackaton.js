@@ -27,7 +27,10 @@ const Hackaton = (props) => {
           {currentHackaton === hallOfFamePosition ? (
             <></>
           ) : (
-            <OrderingFilter setSortScores={setSortScores} />
+            <OrderingFilter
+              setSortScores={setSortScores}
+              sortScores={sortScores}
+            />
           )}
         </Col>
         <Col>

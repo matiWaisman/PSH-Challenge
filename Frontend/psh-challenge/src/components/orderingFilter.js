@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../orderingFilter.css";
 const OrderingFilter = (props) => {
-  const { setSortScores } = props;
+  const { sortScores, setSortScores } = props;
   return (
     <div className="d-flex flex-row-reverse my-5">
       <details className="custom-select">
@@ -10,7 +10,7 @@ const OrderingFilter = (props) => {
             type="radio"
             name="item"
             id="default"
-            title="Order by:"
+            title={sortScores ? "Best developers" : "Every developer"}
             defaultChecked
           ></input>
           <input
