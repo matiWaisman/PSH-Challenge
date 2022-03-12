@@ -9,22 +9,22 @@ const Hackaton = (props) => {
     sortScores,
     setSortScores,
     hackatonsArray,
-    currentHackaton,
+    currentHackatonPosition,
     hallOfFamePosition,
   } = props;
 
   let isHallOfFame = false;
-  if (currentHackaton === hallOfFamePosition) {
+  if (currentHackatonPosition === hallOfFamePosition) {
     isHallOfFame = true;
   }
 
-  console.log(currentHackaton);
+  console.log(currentHackatonPosition);
 
   return (
     <>
       <Row>
         <Col>
-          {currentHackaton === hallOfFamePosition ? (
+          {currentHackatonPosition === hallOfFamePosition ? (
             <></>
           ) : (
             <OrderingFilter
@@ -35,18 +35,20 @@ const Hackaton = (props) => {
         </Col>
         <Col>
           <h1 className="my-5 d-flex justify-content-center">
-            {hackatonsArray[currentHackaton].place}{" "}
-            {hackatonsArray[currentHackaton].date}
+            {hackatonsArray[currentHackatonPosition].place}
+            {hackatonsArray[currentHackatonPosition].date}
           </h1>
-          {hackatonsArray[currentHackaton].developers.map((developer, i) => (
-            <Developer
-              developer={developer}
-              i={i}
-              key={developer.id}
-              sortScores={sortScores}
-              isHallOfFame={isHallOfFame}
-            />
-          ))}
+          {hackatonsArray[currentHackatonPosition].developers.map(
+            (developer, i) => (
+              <Developer
+                developer={developer}
+                i={i}
+                key={developer.id}
+                sortScores={sortScores}
+                isHallOfFame={isHallOfFame}
+              />
+            )
+          )}
         </Col>
         <Col></Col>
       </Row>

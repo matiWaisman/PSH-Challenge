@@ -8,28 +8,29 @@ const Navigation = (props) => {
   const {
     hackatonsArray,
     setShowHome,
-    setCurrentHackaton,
+    setCurrentHackatonPosition,
     hallOfFamePosition,
   } = props;
-  const handleClick = (e) => {
-    setCurrentHackaton(e);
+
+  const handleClick = (i) => {
+    setCurrentHackatonPosition(i);
     setShowHome(false);
   };
 
-  const handleBrand = () => {
+  const handleShowHome = () => {
     setShowHome(true);
   };
   return (
     <>
       <Navbar bg="danger" expand="lg">
         <Container className="navbar-text">
-          <button onClick={handleBrand}>
+          <button onClick={handleShowHome}>
             <Navbar.Brand>
               <img
                 src="https://wearepsh.com/static/images/logo_red_psh.svg"
                 alt="Psh Logo"
                 className="img-logo"
-              ></img>{" "}
+              ></img>
               Hackatons
             </Navbar.Brand>
           </button>

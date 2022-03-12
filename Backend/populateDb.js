@@ -5,7 +5,7 @@ const connect = require("./db/connect");
 const moment = require("moment");
 
 const url = "https://randomuser.me/api";
-var amountOfDocuments = 100; // I had problems returning the count in the contAmountOfDocuments function, patching it adding a global variable
+var amountOfDocuments = 100; // The first time it counts the total amount of documents it returns 0, patching it by making it bigger to not add more documents than it should
 
 const fetchApi = async (url) => {
   const response = await fetch(url);
@@ -34,7 +34,44 @@ function generateRandomDate(date1, date2) {
   }
 }
 
-//I had problems adding the result into the json object, so then i'm creating a new object deestructuring the properties and then creating a new one
+const countAmountOfDocuments = () => {
+  HackatonSchema.countDocuments({}, function (err, count) {
+    if (err) {
+      return handleError(err);
+    }
+    amountOfDocuments = count;
+  });
+};
+
+const populateDb = async () => {
+  const developers = await createDevsObject();
+  const hackatonObject = await createHackatonObject(developers);
+  try {
+    await connect(process.env.MONGO_URI);
+    await HackatonSchema.create(hackatonObject);
+    console.log("Hackaton added");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const createDevsObject = async () => {
+  let devsArray = [];
+  for (let i = 0; i < 10; i++) {
+    const devJson = await fetchApi(url);
+    const devObject = passDevJsonToObject(devJson);
+    devsArray.push(devObject);
+  }
+  return devsArray;
+};
+
+const createHackatonObject = async (developers) => {
+  const hackatonJson = await fetchApi(url);
+  const hackatonObject = passHackatonJsonToObject(hackatonJson, developers);
+  return hackatonObject;
+};
+
+//I had problems adding the result into the json, so then i'm creating a new object deestructuring the properties of the json and adding the result
 const passDevJsonToObject = (data) => {
   const {
     results: [
@@ -74,6 +111,7 @@ const passDevJsonToObject = (data) => {
   return developer;
 };
 
+//I had problems adding the date into the json, so then i'm creating a new object deestructuring the properties of the json and adding the date
 const passHackatonJsonToObject = (data, developers) => {
   const {
     results: [
@@ -90,46 +128,10 @@ const passHackatonJsonToObject = (data, developers) => {
   return hackaton;
 };
 
-const createDevsObject = async () => {
-  let devsArray = [];
-  for (let i = 0; i < 10; i++) {
-    const devJson = await fetchApi(url);
-    const devObject = passDevJsonToObject(devJson);
-    devsArray.push(devObject);
-  }
-  return devsArray;
-};
-
-const createHackatonObject = async (developers) => {
-  const hackatonJson = await fetchApi(url);
-  const hackatonObject = passHackatonJsonToObject(hackatonJson, developers);
-  return hackatonObject;
-};
-
-const populateDb = async () => {
-  const developers = await createDevsObject();
-  const hackatonObject = await createHackatonObject(developers);
-  try {
-    await connect(process.env.MONGO_URI);
-    await HackatonSchema.create(hackatonObject);
-    console.log("Hackaton added");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const countAmountOfDocuments = () => {
-  HackatonSchema.countDocuments({}, function (err, count) {
-    if (err) {
-      return handleError(err);
-    }
-    amountOfDocuments = count;
-  });
-};
-
 setInterval(function () {
   countAmountOfDocuments();
   if (amountOfDocuments < 10) {
+    //Added a limit to the total amount of documents that can be created, i didn't wanted to oversaturate the db, but everything works perfectly with any amount of documents
     populateDb();
   }
 }, 60 * 5000);

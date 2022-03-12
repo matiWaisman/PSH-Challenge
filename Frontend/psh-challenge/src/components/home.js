@@ -7,11 +7,11 @@ const Home = (props) => {
   const {
     hackatonsArray,
     setShowHome,
-    setCurrentHackaton,
+    setCurrentHackatonPosition,
     hallOfFamePosition,
   } = props;
   const handleClick = (e) => {
-    setCurrentHackaton(e);
+    setCurrentHackatonPosition(e);
   };
 
   if (hackatonsArray.length === 0) {
