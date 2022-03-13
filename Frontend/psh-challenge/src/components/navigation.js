@@ -12,6 +12,9 @@ const Navigation = (props) => {
     hallOfFamePosition,
   } = props;
 
+  if (hackatonsArray.length < 1) {
+    console.log("Nos hemos quedao sin cena");
+  }
   const handleClick = (i) => {
     setCurrentHackatonPosition(i);
     setShowHome(false);
@@ -37,22 +40,26 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
-                {hackatonsArray.map((hackaton, i) => (
-                  <button
-                    key={hackaton.id}
-                    onClick={() => {
-                      handleClick(i);
-                    }}
-                  >
-                    <NavDropdown.Item
-                      className={hallOfFamePosition === i ? "golden" : ""}
+              {hackatonsArray.length < 1 ? (
+                ""
+              ) : (
+                <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
+                  {hackatonsArray.map((hackaton, i) => (
+                    <button
+                      key={hackaton.id}
+                      onClick={() => {
+                        handleClick(i);
+                      }}
                     >
-                      {hackaton.place} {hackaton.date}
-                    </NavDropdown.Item>
-                  </button>
-                ))}
-              </NavDropdown>
+                      <NavDropdown.Item
+                        className={hallOfFamePosition === i ? "golden" : ""}
+                      >
+                        {hackaton.place} {hackaton.date}
+                      </NavDropdown.Item>
+                    </button>
+                  ))}
+                </NavDropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
