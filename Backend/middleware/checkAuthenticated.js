@@ -1,9 +1,10 @@
 const checkAuthenticated = (req, res, next) => {
-  console.log("Se ejecuta el middleware");
-  if (req.isAuthenticated()) {
-    return next();
+  const isAuthenticated = req.isAuthenticated();
+  if (isLoggedIn) {
+    //should be isAuthenticated
+    next();
   }
-  res.redirect("/login");
+  next();
 };
 
 module.exports = checkAuthenticated;
