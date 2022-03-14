@@ -7,14 +7,12 @@ const initialize = (passport) => {
     let user = await User.findOne({ email: email });
     User.findOne({ email: email });
     if (!user) {
-      console.log("No hay usuario con ese mail");
       return done(null, false, {
         message: "That email is not registered",
       });
     }
     try {
       if (await bcrypt.compare(password, user.password)) {
-        console.log("Usuario logeado");
         return done(null, user, { message: "User logged in" });
       } else {
         return done(null, false, { message: "Password incorrect" });
