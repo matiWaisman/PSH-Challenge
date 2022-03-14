@@ -16,7 +16,7 @@ router.post("/login", function (req, res, next) {
     if (!user) {
       return res.status(401).json({ message: info.message });
     }
-    res.status(200).json(user);
+    res.status(200).json({ message: info.message, user: user.name });
     isLoggedIn = true;
   })(req, res, next);
 });

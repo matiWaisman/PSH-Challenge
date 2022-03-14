@@ -8,6 +8,10 @@ button {
   outline: inherit;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .img-logo {
   width: 100%;
   max-width: 40px;

@@ -9,10 +9,21 @@ const Home = (props) => {
     setShowHome,
     setCurrentHackatonPosition,
     hallOfFamePosition,
+    isLogged,
   } = props;
   const handleClick = (e) => {
     setCurrentHackatonPosition(e);
   };
+
+  if (!isLogged) {
+    return (
+      <>
+        <div className="my-5 d-flex justify-content-center">
+          <h2>You need to log in to see the competitions</h2>
+        </div>
+      </>
+    );
+  }
 
   if (hackatonsArray.length === 0) {
     return (

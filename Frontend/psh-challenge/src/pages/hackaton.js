@@ -1,8 +1,8 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Developer from "./developer";
-import OrderingFilter from "./orderingFilter";
+import Developer from "../components/developer";
+import OrderingFilter from "../components/orderingFilter";
 
 const Hackaton = (props) => {
   const {
@@ -17,8 +17,6 @@ const Hackaton = (props) => {
   if (currentHackatonPosition === hallOfFamePosition) {
     isHallOfFame = true;
   }
-
-  console.log(currentHackatonPosition);
 
   return (
     <>
