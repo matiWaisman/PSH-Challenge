@@ -12,25 +12,26 @@ import Hackaton from "./components/hackaton";
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
   const [hackatonsArray, setHackatonsArray] = useState([]);
-  const [showHome, setShowHome] = useState(true); //Could have used React-Router-Dom to do the pagination, but seemed like a waste of resources in a two page web app, prefeared to do a bolean to display the home or the list
+  const [showHome, setShowHome] = useState(true);
   const [currentHackatonPosition, setCurrentHackatonPosition] = useState(); //Normally i woudln't make this variable to display an array of objects, but because i have to display one position of the array differently than the other ones i prefeared to make this variable that stores the value of the currentHackaton and depending on which one it is the component is rendered differently
   const [sortScores, setSortScores] = useState(false);
   const [hallOfFamePosition, setHallOfFamePosition] = useState();
   const [isLogged, setIsLogged] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState(
+    localStorage.getItem("currentUser")
+  );
 
-  const getHackatons = async (url) => {
-    if (isLogged) {
-      const response = await fetch(url);
-      const responseJson = await response.json();
-      if (responseJson && response.status === 200) {
-        let devsWithHackaton = addHackatonToDeveloper(responseJson.hackatons);
-        let hackatons = addHallOfFame(devsWithHackaton);
-        setHackatonsArray(hackatons);
-        setHallOfFamePosition(hackatons.length - 1);
-      }
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem("isLogged", isLogged);
+    localStorage.setItem("currentUser", `${currentUser}`);
+    console.log(localStorage.getItem("currentUser")); //This logs the current user
+  });
+
+  useEffect(() => {
+    setIsLogged(localStorage.getItem("isLogged"));
+    console.log(localStorage.getItem("currentUser"));
+    setCurrentUser(localStorage.getItem("currentUser"));
+  }, []);
 
   useEffect(() => {
     getHackatons(url);
@@ -47,6 +48,19 @@ function App() {
     }
     getHackatons(url);
   }, [sortScores]);
+
+  const getHackatons = async (url) => {
+    if (isLogged) {
+      const response = await fetch(url);
+      const responseJson = await response.json();
+      if (responseJson && response.status === 200) {
+        let devsWithHackaton = addHackatonToDeveloper(responseJson.hackatons);
+        let hackatons = addHallOfFame(devsWithHackaton);
+        setHackatonsArray(hackatons);
+        setHallOfFamePosition(hackatons.length - 1);
+      }
+    }
+  };
 
   const addHackatonToDeveloper = (hackatons) => {
     if (hackatons.lenght > 1) {

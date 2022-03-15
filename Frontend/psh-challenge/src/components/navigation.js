@@ -18,6 +18,7 @@ const Navigation = (props) => {
   const navigate = useNavigate();
   const handleClick = (i) => {
     setCurrentHackatonPosition(i);
+    setShowHome(false);
     navigate("/");
   };
   const handleShowHome = () => {
@@ -65,10 +66,10 @@ const Navigation = (props) => {
           </Navbar.Collapse>
           <NavLink
             className="navbar-item"
-            activeClassName="is-active"
+            activeclassname="is-active"
             to={isLogged ? "/logout" : "/login"}
           >
-            <AiOutlineUser size={40} />
+            <AiOutlineUser size={35} />
           </NavLink>
         </Container>
       </Navbar>

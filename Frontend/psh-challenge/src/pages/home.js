@@ -1,7 +1,9 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
+import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/esm/Button";
 
 const Home = (props) => {
   const {
@@ -11,6 +13,8 @@ const Home = (props) => {
     hallOfFamePosition,
     isLogged,
   } = props;
+  const navigate = useNavigate();
+
   const handleClick = (e) => {
     setCurrentHackatonPosition(e);
     setShowHome(false);
@@ -19,8 +23,14 @@ const Home = (props) => {
   if (!isLogged) {
     return (
       <>
-        <div className="my-5 d-flex justify-content-center">
+        <div className="mt-5 d-flex justify-content-center">
           <h2>You need to log in to see the competitions</h2>
+        </div>
+        <div className="d-flex justify-content-center">
+          <Button variant="success" onClick={() => navigate("/login")}>
+            {" "}
+            Login
+          </Button>
         </div>
       </>
     );

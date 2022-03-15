@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Logout = (props) => {
   const { currentUser, setCurrentUser, isLogged, setIsLogged } = props;
   const navigate = useNavigate();
-  console.log(isLogged);
   const handleClick = (e) => {
     setIsLogged(false);
     setCurrentUser("");
