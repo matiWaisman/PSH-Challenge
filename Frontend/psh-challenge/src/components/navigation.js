@@ -3,8 +3,9 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navigation = (props) => {
   const {
@@ -12,16 +13,22 @@ const Navigation = (props) => {
     setCurrentHackatonPosition,
     hallOfFamePosition,
     isLogged,
+    setShowHome,
   } = props;
+  const navigate = useNavigate();
   const handleClick = (i) => {
     setCurrentHackatonPosition(i);
+    navigate("/");
   };
-  console.log(isLogged);
+  const handleShowHome = () => {
+    setShowHome(true);
+    navigate("/");
+  };
   return (
     <>
       <Navbar bg="danger" expand="lg">
         <Container className="navbar-text">
-          <NavLink className="navbar-item" activeClassName="is-active" to="/">
+          <button onClick={handleShowHome}>
             <Navbar.Brand>
               <img
                 src="https://wearepsh.com/static/images/logo_red_psh.svg"
@@ -30,7 +37,7 @@ const Navigation = (props) => {
               ></img>
               Hackatons
             </Navbar.Brand>
-          </NavLink>
+          </button>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -39,24 +46,18 @@ const Navigation = (props) => {
               ) : (
                 <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
                   {hackatonsArray.map((hackaton, i) => (
-                    <NavLink
-                      className="navbar-item"
-                      activeClassName="is-active"
-                      to="/hackatons"
+                    <button
+                      key={hackaton.id}
+                      onClick={() => {
+                        handleClick(i);
+                      }}
                     >
-                      <button
-                        key={hackaton.id}
-                        onClick={() => {
-                          handleClick(i);
-                        }}
+                      <NavDropdown.Item
+                        className={hallOfFamePosition === i ? "golden" : ""}
                       >
-                        <NavDropdown.Item
-                          className={hallOfFamePosition === i ? "golden" : ""}
-                        >
-                          {hackaton.place} {hackaton.date}
-                        </NavDropdown.Item>
-                      </button>
-                    </NavLink>
+                        {hackaton.place} {hackaton.date}
+                      </NavDropdown.Item>
+                    </button>
                   ))}
                 </NavDropdown>
               )}

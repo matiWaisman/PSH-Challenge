@@ -7,6 +7,7 @@ import NotAllowed from "./pages/notAllowed";
 import Login from "./pages/Login";
 import Logout from "./pages/logout";
 import Register from "./pages/register";
+import Hackaton from "./components/hackaton";
 
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
@@ -107,13 +108,23 @@ function App() {
             path="/"
             exact
             element={
-              <Home
-                hackatonsArray={hackatonsArray}
-                setShowHome={setShowHome}
-                setCurrentHackatonPosition={setCurrentHackatonPosition}
-                hallOfFamePosition={hallOfFamePosition}
-                isLogged={isLogged}
-              />
+              !showHome ? (
+                <Hackaton
+                  sortScores={sortScores}
+                  setSortScores={setSortScores}
+                  hackatonsArray={hackatonsArray}
+                  currentHackatonPosition={currentHackatonPosition}
+                  hallOfFamePosition={hallOfFamePosition}
+                />
+              ) : (
+                <Home
+                  hackatonsArray={hackatonsArray}
+                  setShowHome={setShowHome}
+                  setCurrentHackatonPosition={setCurrentHackatonPosition}
+                  hallOfFamePosition={hallOfFamePosition}
+                  isLogged={isLogged}
+                />
+              )
             }
           />
           {!isLogged && (

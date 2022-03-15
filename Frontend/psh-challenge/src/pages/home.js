@@ -13,6 +13,7 @@ const Home = (props) => {
   } = props;
   const handleClick = (e) => {
     setCurrentHackatonPosition(e);
+    setShowHome(false);
   };
 
   if (!isLogged) {
@@ -56,7 +57,6 @@ const Home = (props) => {
                 key={hackaton.place}
                 onClick={() => {
                   handleClick(i);
-                  setShowHome(false);
                 }}
               >
                 <ListGroup.Item

@@ -33,7 +33,7 @@ const Hackaton = (props) => {
         </Col>
         <Col>
           <h1 className="my-5 d-flex justify-content-center">
-            {hackatonsArray[currentHackatonPosition].place}
+            {hackatonsArray[currentHackatonPosition].place} {""}
             {hackatonsArray[currentHackatonPosition].date}
           </h1>
           {hackatonsArray[currentHackatonPosition].developers.map(
