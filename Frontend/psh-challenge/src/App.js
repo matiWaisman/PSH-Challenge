@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Navigation from "./components/navigation";
 import Home from "./pages/home";
-import Hackaton from "./pages/hackaton";
+import NotAllowed from "./pages/notAllowed";
 import Login from "./pages/Login";
+import Logout from "./pages/logout";
+import Register from "./pages/register";
 
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
@@ -97,6 +99,7 @@ function App() {
           setShowHome={setShowHome}
           setCurrentHackatonPosition={setCurrentHackatonPosition}
           hallOfFamePosition={hallOfFamePosition}
+          isLogged={isLogged}
         />
 
         <Routes>
@@ -113,30 +116,36 @@ function App() {
               />
             }
           />
-          <Route
-            path="/hackatons"
-            exact
-            element={
-              <Hackaton
-                sortScores={sortScores}
-                setSortScores={setSortScores}
-                hackatonsArray={hackatonsArray}
-                currentHackatonPosition={currentHackatonPosition}
-                hallOfFamePosition={hallOfFamePosition}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            exact
-            element={
-              <Login
-                isLogged={isLogged}
-                setIsLogged={setIsLogged}
-                setCurrentUser={setCurrentUser}
-              />
-            }
-          />
+          {!isLogged && (
+            <Route
+              path="/login"
+              exact
+              element={
+                <Login
+                  isLogged={isLogged}
+                  setIsLogged={setIsLogged}
+                  setCurrentUser={setCurrentUser}
+                  currentUser={currentUser}
+                />
+              }
+            />
+          )}
+          {!isLogged && <Route path="/register" exact element={<Register />} />}
+          {isLogged && (
+            <Route
+              path="/logout"
+              exact
+              element={
+                <Logout
+                  isLogged={isLogged}
+                  setIsLogged={setIsLogged}
+                  setCurrentUser={setCurrentUser}
+                  currentUser={currentUser}
+                />
+              }
+            />
+          )}
+          <Route path="*" element={<NotAllowed />}></Route>
         </Routes>
       </Router>
     </div>

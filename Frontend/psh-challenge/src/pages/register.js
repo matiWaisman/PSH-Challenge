@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Logout from "../components/logout";
+import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
-const Register = (props) => {
-  const { isLogged, setIsLogged } = props;
-
+const Register = () => {
+  const navigate = useNavigate();
   const [formText, setFormText] = useState({
     email: "",
     name: "",
@@ -17,12 +16,9 @@ const Register = (props) => {
 
   const { email, name, password, password2 } = formText;
 
-  if (isLogged) {
-    <Logout isLogged={isLogged} setIsLogged={setIsLogged} />;
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    submitUser();
   };
 
   const handleChange = (e) => {
@@ -32,7 +28,42 @@ const Register = (props) => {
     });
   };
 
-  const checkUser = () => {};
+  const submitUser = async () => {
+    const rawResponse = await fetch(
+      "http://localhost:5000/api/v1/users/register",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formText.email,
+          password: formText.password,
+          password2: formText.password2,
+          name: formText.name,
+        }),
+      }
+    );
+    const content = await rawResponse.json();
+    if (rawResponse.status === 401) {
+      let errorsArray = [];
+      content.forEach((position) => {
+        errorsArray.push(position.msg);
+      });
+      window.alert(errorsArray);
+    }
+    if (rawResponse.status === 200) {
+      window.alert("User registered succesfully");
+      setFormText({
+        email: "",
+        password: "",
+        password2: "",
+        name: "",
+      });
+      navigate("/login");
+    }
+  };
 
   return (
     <>

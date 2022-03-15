@@ -7,11 +7,16 @@ import { NavLink } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 
 const Navigation = (props) => {
-  const { hackatonsArray, setCurrentHackatonPosition, hallOfFamePosition } =
-    props;
+  const {
+    hackatonsArray,
+    setCurrentHackatonPosition,
+    hallOfFamePosition,
+    isLogged,
+  } = props;
   const handleClick = (i) => {
     setCurrentHackatonPosition(i);
   };
+  console.log(isLogged);
   return (
     <>
       <Navbar bg="danger" expand="lg">
@@ -29,7 +34,7 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {hackatonsArray.length < 1 ? (
+              {hackatonsArray.length < 1 || !isLogged ? (
                 ""
               ) : (
                 <NavDropdown title="Hackatons List" id="basic-nav-dropdown">
@@ -60,7 +65,7 @@ const Navigation = (props) => {
           <NavLink
             className="navbar-item"
             activeClassName="is-active"
-            to="/login"
+            to={isLogged ? "/logout" : "/login"}
           >
             <AiOutlineUser size={40} />
           </NavLink>

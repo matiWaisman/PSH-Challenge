@@ -1,8 +1,8 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Developer from "../components/developer";
-import OrderingFilter from "../components/orderingFilter";
+import Developer from "./developer";
+import OrderingFilter from "./orderingFilter";
 
 const Hackaton = (props) => {
   const {

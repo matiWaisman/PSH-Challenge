@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logout from "../components/logout";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const Login = (props) => {
-  const { isLogged, setIsLogged, setCurrentUser } = props;
+  const { isLogged, setIsLogged, setCurrentUser, currentUser } = props;
   const navigate = useNavigate();
 
   const [formText, setFormText] = useState({
@@ -16,11 +15,6 @@ const Login = (props) => {
   });
 
   const { email, password } = formText;
-
-  console.log(isLogged);
-  if (isLogged) {
-    return <Logout isLogged={isLogged} setIsLogged={setIsLogged} />;
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,13 +58,17 @@ const Login = (props) => {
     }
   };
 
+  if (isLogged) {
+    navigate("/logout");
+  }
+
   return (
     <>
       <Row>
         <Col></Col>
         <Col>
           <div className="d-flex justify-content-center my-5">
-            <h1>Login page</h1>
+            <h1>Login</h1>
           </div>
 
           <Form onSubmit={handleSubmit}>
@@ -96,9 +94,14 @@ const Login = (props) => {
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              Login
             </Button>
           </Form>
+          <div className="d-flex justify-content-center my-5">
+            <Button variant="success" onClick={() => navigate("/register")}>
+              Register
+            </Button>
+          </div>
         </Col>
         <Col></Col>
       </Row>
