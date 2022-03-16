@@ -6,18 +6,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/esm/Button";
 
 const Home = (props) => {
-  const {
-    hackatonsArray,
-    setShowHome,
-    setCurrentHackatonPosition,
-    hallOfFamePosition,
-    isLogged,
-  } = props;
+  const { hackatonsArray, hallOfFamePosition, isLogged } = props;
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    setCurrentHackatonPosition(e);
-    setShowHome(false);
+    navigate(`/hackaton/${e}`);
   };
 
   if (!isLogged) {

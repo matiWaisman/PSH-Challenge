@@ -7,13 +7,11 @@ import NotAllowed from "./pages/notAllowed";
 import Login from "./pages/Login";
 import Logout from "./pages/logout";
 import Register from "./pages/register";
-import Hackaton from "./components/hackaton";
+import Hackaton from "./pages/hackaton";
 
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
   const [hackatonsArray, setHackatonsArray] = useState([]);
-  const [showHome, setShowHome] = useState(true);
-  const [currentHackatonPosition, setCurrentHackatonPosition] = useState(); //Normally i woudln't make this variable to display an array of objects, but because i have to display one position of the array differently than the other ones i prefeared to make this variable that stores the value of the currentHackaton and depending on which one it is the component is rendered differently
   const [sortScores, setSortScores] = useState(false);
   const [hallOfFamePosition, setHallOfFamePosition] = useState();
   const [isLogged, setIsLogged] = useState(false);
@@ -24,22 +22,16 @@ function App() {
   useEffect(() => {
     localStorage.setItem("isLogged", isLogged);
     localStorage.setItem("currentUser", `${currentUser}`);
-    console.log(localStorage.getItem("currentUser")); //This logs the current user
   });
 
   useEffect(() => {
     setIsLogged(localStorage.getItem("isLogged"));
-    console.log(localStorage.getItem("currentUser"));
     setCurrentUser(localStorage.getItem("currentUser"));
   }, []);
 
   useEffect(() => {
     getHackatons(url);
   }, [isLogged]);
-
-  useEffect(() => {
-    setSortScores(false);
-  }, [showHome]);
 
   useEffect(() => {
     url = "http://localhost:5000/api/v1/hackatons";
@@ -111,8 +103,6 @@ function App() {
       <Router>
         <Navigation
           hackatonsArray={hackatonsArray}
-          setShowHome={setShowHome}
-          setCurrentHackatonPosition={setCurrentHackatonPosition}
           hallOfFamePosition={hallOfFamePosition}
           isLogged={isLogged}
         />
@@ -122,25 +112,26 @@ function App() {
             path="/"
             exact
             element={
-              !showHome ? (
+              <Home
+                hackatonsArray={hackatonsArray}
+                hallOfFamePosition={hallOfFamePosition}
+                isLogged={isLogged}
+              />
+            }
+          />
+          {isLogged && (
+            <Route
+              path="/hackaton/:position"
+              element={
                 <Hackaton
                   sortScores={sortScores}
                   setSortScores={setSortScores}
                   hackatonsArray={hackatonsArray}
-                  currentHackatonPosition={currentHackatonPosition}
                   hallOfFamePosition={hallOfFamePosition}
                 />
-              ) : (
-                <Home
-                  hackatonsArray={hackatonsArray}
-                  setShowHome={setShowHome}
-                  setCurrentHackatonPosition={setCurrentHackatonPosition}
-                  hallOfFamePosition={hallOfFamePosition}
-                  isLogged={isLogged}
-                />
-              )
-            }
-          />
+              }
+            />
+          )}
           {!isLogged && (
             <Route
               path="/login"

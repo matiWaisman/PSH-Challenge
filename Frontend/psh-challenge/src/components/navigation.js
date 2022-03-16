@@ -8,21 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const Navigation = (props) => {
-  const {
-    hackatonsArray,
-    setCurrentHackatonPosition,
-    hallOfFamePosition,
-    isLogged,
-    setShowHome,
-  } = props;
+  const { hackatonsArray, hallOfFamePosition, isLogged } = props;
   const navigate = useNavigate();
   const handleClick = (i) => {
-    setCurrentHackatonPosition(i);
-    setShowHome(false);
-    navigate("/");
+    navigate(`/hackaton/${i}`);
   };
   const handleShowHome = () => {
-    setShowHome(true);
     navigate("/");
   };
   return (
