@@ -11,9 +11,7 @@ import Hackaton from "./pages/hackaton";
 
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
-  const [hackatonsArray, setHackatonsArray] = useState(
-    JSON.parse(localStorage.getItem("hackatonsArray"))
-  );
+  const [hackatonsArray, setHackatonsArray] = useState([]);
   const [sortScores, setSortScores] = useState(false);
   const [hallOfFamePosition, setHallOfFamePosition] = useState();
   const [isLogged, setIsLogged] = useState(false);
