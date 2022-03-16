@@ -9,7 +9,6 @@ const Hackaton = (props) => {
   const { sortScores, setSortScores, hackatonsArray, hallOfFamePosition } =
     props;
   const params = useParams();
-  console.log(params.position);
   let isHallOfFame = false;
   if (params.position === hallOfFamePosition) {
     isHallOfFame = true;

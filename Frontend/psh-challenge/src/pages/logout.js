@@ -5,10 +5,17 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 const Logout = (props) => {
-  const { currentUser, setCurrentUser, isLogged, setIsLogged } = props;
+  const {
+    currentUser,
+    setCurrentUser,
+    isLogged,
+    setIsLogged,
+    setHackatonsArray,
+  } = props;
   const navigate = useNavigate();
   const handleClick = (e) => {
     setIsLogged(false);
+    setHackatonsArray([]);
     setCurrentUser("");
     navigate("/login");
   };

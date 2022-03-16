@@ -11,26 +11,18 @@ import Hackaton from "./pages/hackaton";
 
 function App() {
   var url = "http://localhost:5000/api/v1/hackatons";
-  const [hackatonsArray, setHackatonsArray] = useState([]);
+  const [hackatonsArray, setHackatonsArray] = useState(
+    JSON.parse(localStorage.getItem("hackatonsArray"))
+  );
   const [sortScores, setSortScores] = useState(false);
   const [hallOfFamePosition, setHallOfFamePosition] = useState();
   const [isLogged, setIsLogged] = useState(false);
-  const [currentUser, setCurrentUser] = useState(
-    localStorage.getItem("currentUser")
-  );
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("isLogged", isLogged);
-    localStorage.setItem("currentUser", `${currentUser}`);
-  });
-
-  useEffect(() => {
-    setIsLogged(localStorage.getItem("isLogged"));
-    setCurrentUser(localStorage.getItem("currentUser"));
-  }, []);
-
-  useEffect(() => {
-    getHackatons(url);
+    if (isLogged) {
+      getHackatons(url);
+    }
   }, [isLogged]);
 
   useEffect(() => {
@@ -157,6 +149,7 @@ function App() {
                   setIsLogged={setIsLogged}
                   setCurrentUser={setCurrentUser}
                   currentUser={currentUser}
+                  setHackatonsArray={setHackatonsArray}
                 />
               }
             />
