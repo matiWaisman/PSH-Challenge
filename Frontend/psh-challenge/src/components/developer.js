@@ -3,6 +3,7 @@ import "../developer.css";
 
 const Developer = (props) => {
   const { developer, i, sortScores, isHallOfFame } = props;
+  console.log(isHallOfFame);
   var borderColorClass = "";
   if (sortScores || isHallOfFame) {
     if (i === 0) {

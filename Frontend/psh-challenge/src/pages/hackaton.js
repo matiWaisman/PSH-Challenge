@@ -10,7 +10,7 @@ const Hackaton = (props) => {
     props;
   const params = useParams();
   let isHallOfFame = false;
-  if (params.position === hallOfFamePosition) {
+  if (params.position == hallOfFamePosition) {
     isHallOfFame = true;
   }
 
@@ -18,7 +18,7 @@ const Hackaton = (props) => {
     <>
       <Row>
         <Col>
-          {params.position === hallOfFamePosition ? (
+          {params.position == hallOfFamePosition ? (
             <></>
           ) : (
             <OrderingFilter
