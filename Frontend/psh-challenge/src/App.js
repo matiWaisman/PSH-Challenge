@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Navigation from "./components/navigation";
 import Home from "./pages/home";
 import NotAllowed from "./pages/notAllowed";
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import Logout from "./pages/logout";
 import Register from "./pages/register";
 import Hackaton from "./pages/hackaton";
